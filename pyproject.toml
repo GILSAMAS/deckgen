@@ -8,6 +8,9 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 
+[tool.poetry.group.test]
+optional=true
+
 [tool.poetry.scripts]
 test = "deckgen.entry:main"
 
