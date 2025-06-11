@@ -11,6 +11,9 @@ python = "^3.11"
 [tool.poetry.scripts]
 test = "deckgen.entry:main"
 
+[tool.poetry.group.test.dependencies]
+pytest = "^8.4.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
