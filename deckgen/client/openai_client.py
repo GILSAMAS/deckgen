@@ -73,7 +73,9 @@ class OpenAIClient:
             "OpenAI-Project": openai_api_project,
         }
 
-    def request(self, method: str, endpoint: str, data: Optional[Dict] = None) -> httpx.Response:
+    def request(
+        self, method: str, endpoint: str, data: Optional[Dict] = None
+    ) -> httpx.Response:
         """
         Makes a request to the OpenAI API.
 
@@ -85,13 +87,3 @@ class OpenAIClient:
         url = f"{self.base_url}{endpoint}"
         response = httpx.request(method, url, headers=self.headers, data=data)
         return response
-        
-    @property
-    def response_endpoint(self) -> str:
-        """
-        Returns the endpoint URL for OpenAI API responses.
-        This is constructed using the base URL and the API version.
-
-        :return: The complete endpoint URL for OpenAI API responses.
-        """
-        return f"{self.base_url}responses"
