@@ -84,7 +84,6 @@ class OpenAIClient:
         """
         url = f"{self.base_url}{endpoint}"
         response = httpx.request(method, url, headers=self.headers, data=data)
-        # response.raise_for_status()
         return response
         
     @property
