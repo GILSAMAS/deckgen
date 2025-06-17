@@ -1,22 +1,71 @@
 from typing import List 
 from typing import Dict
 from typing import Optional
+from typing import List
 
-class DeckGen:
-    def __init__(self, input_text:Optional[str]=None):
+class Deck:
+
+    def __init__(self, name: str, description: Optional[str] = None):
         """
-        Initializes the DeckGen class with the input text.
+        Initializes a Deck with a name and an optional description.
         
-        :param input_text: The text input to generate a deck from.
+        :param name: The name of the deck.
+        :param description: An optional description of the deck.
         """
-        self.input_text = input_text
+        self.name = name
+        self.description = description if description is not None else ""
+        self.cards: List[Card] = []
 
-    def generate_deck(self)->List[Dict[str, str]]:
+    def list_cards(self) -> List[Dict[str, str]]:
         """
-        Generates a deck based on the input text.
-        :return: List of generated cards. Each card is a dictionary with 'front' and 'back' keys.
+        Lists all cards in the deck.
+        
+        :return: A list of dictionaries representing the cards in the deck.
+                 Each dictionary contains 'front' and 'back' keys.
         """
-        # Placeholder for deck generation logic
-        return [
-            {"front": "Sample Card Front", "back": "Sample Card Back"}
-        ]
+        return [{"front": card.get_front(), "back": card.get_back()} for card in self.cards]
+
+    def add_card(self, card: 'Card'):
+        """
+        Adds a card to the deck.
+        
+        :param card: The Card object to be added to the deck.
+        """
+        self.cards.append(card)
+
+    
+class Card:
+    def __init__(self, front: str, back: str, tags: Optional[List[str]] = None):
+        """
+        Initializes a Card with a front and back.
+        
+        :param front: The front text of the card.
+        :param back: The back text of the card.
+        """
+        self.front = front
+        self.back = back
+        self.tags = tags if tags is not None else []
+
+    def get_front(self) -> str:
+        """
+        Returns the front text of the card.
+        
+        :return: The front text of the card.
+        """
+        return self.front
+
+    def get_back(self) -> str:
+        """
+        Returns the back text of the card.
+        
+        :return: The back text of the card.
+        """
+        return self.back
+
+    def get_tags(self) -> List[str]:
+        """
+        Returns the tags associated with the card.
+        
+        :return: List of tags associated with the card.
+        """
+        return self.tags

@@ -1,6 +1,6 @@
-from deckgen.decks.base import DeckGen
+from deckgen.decks.generator import DeckGen
+from deckgen.pipelines.qa_pipeline import QAToolKit
 from prompteng.prompts.parser import QAParser 
-from prompteng.pipelines.qa_pipeline import QAToolKit
 from dotenv import load_dotenv
 import os
 def main():
@@ -31,10 +31,6 @@ def main():
     For Logic Apps, you create orchestrations by using a GUI or editing configuration files.
     """
 
-    qa_toolkit = QAToolKit(input_text=text)
-    qa_list = qa_toolkit.generate_qa()
-    for qa in qa_list:
-        print(f"Question: {qa['question']}")
-        print(f"Answer: {qa['answer']}")
-        print("-" * 40)
-    
+    deck_gen = DeckGen(input_text=text)
+    deck = deck_gen.generate_deck()
+    print(deck.list_cards())
