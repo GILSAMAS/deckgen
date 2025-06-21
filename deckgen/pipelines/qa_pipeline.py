@@ -3,17 +3,16 @@ from prompteng.prompts.parser import QAParser
 from prompteng.prompts.templates import TOPIC_FINDER
 from prompteng.prompts.templates import QUESTION_ASKING
 from typing import Optional
-from typing import List
+from typing import List  
 from typing import Dict
 import json
-
 
 class QAToolKit:
     def __init__(self, input_text: Optional[str] = None):
         self.input_text = input_text
         self.openai_client = OpenAIClient()
 
-    def _get_topics(self, text: Optional[str] = None) -> str:
+    def _get_topics(self, text: Optional[str] = None)-> str:
         """
         Extracts topics from the input text.
         This is a placeholder for topic extraction logic.
@@ -30,9 +29,7 @@ class QAToolKit:
             data=json.dumps(
                 {
                     "model": "gpt-3.5-turbo",
-                    "input": TOPIC_FINDER.replace("{{", "{")
-                    .replace("}}", "}")
-                    .format(text=self.input_text),
+                    "input": TOPIC_FINDER.replace('{{', "{").replace('}}', "}").format(text=self.input_text),
                 }
             ),
         )
@@ -54,9 +51,9 @@ class QAToolKit:
             data=json.dumps(
                 {
                     "model": "gpt-3.5-turbo",
-                    "input": QUESTION_ASKING.replace("{{", "{")
-                    .replace("}}", "}")
-                    .format(expertise=topics, text=self.input_text),
+                    "input": QUESTION_ASKING.replace('{{', "{").replace('}}', "}").format(
+                        expertise=topics, text=self.input_text
+                    ),
                 }
             ),
         )
