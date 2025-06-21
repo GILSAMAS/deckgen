@@ -57,14 +57,8 @@ class OpenAIClient:
         if not self.api_key:
             raise ValueError("API key is required for OpenAI API requests.")
 
-        # Ensure the API key is set in the environment variable
         openai_api_organization = os.environ.get("OPENAI_API_ORGANIZATION", None)
         openai_api_project = os.environ.get("OPENAI_API_PROJECT", None)
-
-        if not openai_api_organization or not openai_api_project:
-            raise ValueError(
-                "Both OPENAI_API_ORGANIZATION and OPENAI_API_PROJECT must be set in the environment variables."
-            )
 
         return {
             "Authorization": f"Bearer {self.api_key}",
