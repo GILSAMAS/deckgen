@@ -50,7 +50,7 @@ class QAToolKit:
             endpoint="responses",
             data=json.dumps(
                 {
-                    "model": "gpt-3.5-turbo",
+                    "model": "gpt-4o-mini",
                     "input": QUESTION_ASKING.replace('{{', "{").replace('}}', "}").format(
                         expertise=topics, text=self.input_text
                     ),
