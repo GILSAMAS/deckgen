@@ -60,7 +60,18 @@ class QAToolKit:
 
         qa_string = qa_response.json()["output"][0]["content"][0]["text"]
         return qa_string
-
+    
+    def _split_text(self, text: str) -> List[str]:
+        """
+        Splits the input text into manageable chunks.
+        This is a placeholder for text splitting logic.
+        :param text: The input text to be split.
+        :return: A list of text chunks.
+        """
+        # For simplicity, we will split the text by paragraphs.
+        # In a real-world scenario, you might want to use a more sophisticated method.
+        return text.split('\n\n')
+    
     def generate_qa(self) -> List[Dict[str, str]]:
         """
         Generates a list of questions and answers based on the input text.
@@ -69,9 +80,21 @@ class QAToolKit:
         if not self.input_text:
             raise ValueError("No input text provided for question generation.")
 
-        topics = self._get_topics(self.input_text)
-        qa_string = self._generage_qa_string(topics)
+        documents = self._split_text(self.input_text)
+        question_answer_pairs = []
+        parser = QAParser()
+        if not documents:
+            raise ValueError("No documents found in the input text.")
+        
+        for document in documents:
+            if not document.strip():
+                continue
 
-        parser = QAParser(qa_string)
-        qa_list = parser.parse()
-        return qa_list
+            topics = self._get_topics(text = document)
+            if not topics:
+                raise ValueError("No topics found in the input text.")
+            qa_string = self._generage_qa_string(topics)
+            qa_list = parser.parse(text=qa_string)
+            question_answer_pairs.extend(qa_list)
+
+        return question_answer_pairs
