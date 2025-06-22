@@ -6,7 +6,7 @@ import re
 
 class QAParser:
 
-    def __init__(self, text: Optional[str]) -> None:
+    def __init__(self, text: Optional[str] = None) -> None:
         """
         Initializes the QAParser with the provided text.
 
