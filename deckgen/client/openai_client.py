@@ -79,5 +79,7 @@ class OpenAIClient:
         :return: The response from the OpenAI API.
         """
         url = f"{self.base_url}{endpoint}"
-        response = httpx.request(method, url, headers=self.headers, data=data, timeout=30)
+        response = httpx.request(
+            method, url, headers=self.headers, data=data, timeout=30
+        )
         return response

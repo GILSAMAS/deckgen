@@ -3,16 +3,19 @@ from prompteng.prompts.parser import QAParser
 from prompteng.prompts.templates import TOPIC_FINDER
 from prompteng.prompts.templates import QUESTION_ASKING
 from typing import Optional
-from typing import List  
+from typing import List
 from typing import Dict
 import json
 
-class QAToolKit:
-    def __init__(self, input_text: Optional[str] = None, openai_api_key: Optional[str] = None):
-        self.input_text = input_text
-        self.openai_client = OpenAIClient( api_key= openai_api_key)
 
-    def _get_topics(self, text: Optional[str] = None)-> str:
+class QAToolKit:
+    def __init__(
+        self, input_text: Optional[str] = None, openai_api_key: Optional[str] = None
+    ):
+        self.input_text = input_text
+        self.openai_client = OpenAIClient(api_key=openai_api_key)
+
+    def _get_topics(self, text: Optional[str] = None) -> str:
         """
         Extracts topics from the input text.
         This is a placeholder for topic extraction logic.
@@ -29,7 +32,9 @@ class QAToolKit:
             data=json.dumps(
                 {
                     "model": "gpt-3.5-turbo",
-                    "input": TOPIC_FINDER.replace('{{', "{").replace('}}', "}").format(text=self.input_text),
+                    "input": TOPIC_FINDER.replace("{{", "{")
+                    .replace("}}", "}")
+                    .format(text=self.input_text),
                 }
             ),
         )
@@ -51,16 +56,16 @@ class QAToolKit:
             data=json.dumps(
                 {
                     "model": "gpt-4o-mini",
-                    "input": QUESTION_ASKING.replace('{{', "{").replace('}}', "}").format(
-                        expertise=topics, text=self.input_text
-                    ),
+                    "input": QUESTION_ASKING.replace("{{", "{")
+                    .replace("}}", "}")
+                    .format(expertise=topics, text=self.input_text),
                 }
             ),
         )
 
         qa_string = qa_response.json()["output"][0]["content"][0]["text"]
         return qa_string
-    
+
     def _split_text(self, text: str) -> List[str]:
         """
         Splits the input text into manageable chunks.
@@ -70,8 +75,8 @@ class QAToolKit:
         """
         # For simplicity, we will split the text by paragraphs.
         # In a real-world scenario, you might want to use a more sophisticated method.
-        return text.split('\n\n')
-    
+        return text.split("\n\n")
+
     def generate_qa(self) -> List[Dict[str, str]]:
         """
         Generates a list of questions and answers based on the input text.
@@ -85,12 +90,12 @@ class QAToolKit:
         parser = QAParser()
         if not documents:
             raise ValueError("No documents found in the input text.")
-        
+
         for document in documents:
             if not document.strip():
                 continue
 
-            topics = self._get_topics(text = document)
+            topics = self._get_topics(text=document)
             if not topics:
                 raise ValueError("No topics found in the input text.")
             qa_string = self._generage_qa_string(topics)
