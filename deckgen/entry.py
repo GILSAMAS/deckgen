@@ -1,8 +1,10 @@
 from deckgen.decks.generator import DeckGen
 from deckgen.pipelines.qa_pipeline import QAToolKit
-from prompteng.prompts.parser import QAParser 
+from prompteng.prompts.parser import QAParser
 from dotenv import load_dotenv
 import os
+
+
 def main():
     """
     Main function to run the DeckGen application.

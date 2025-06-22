@@ -8,9 +8,9 @@ from typing import Dict
 import json
 
 class QAToolKit:
-    def __init__(self, input_text: Optional[str] = None):
+    def __init__(self, input_text: Optional[str] = None, openai_api_key: Optional[str] = None):
         self.input_text = input_text
-        self.openai_client = OpenAIClient()
+        self.openai_client = OpenAIClient( api_key= openai_api_key)
 
     def _get_topics(self, text: Optional[str] = None)-> str:
         """
@@ -50,7 +50,7 @@ class QAToolKit:
             endpoint="responses",
             data=json.dumps(
                 {
-                    "model": "gpt-3.5-turbo",
+                    "model": "gpt-4o-mini",
                     "input": QUESTION_ASKING.replace('{{', "{").replace('}}', "}").format(
                         expertise=topics, text=self.input_text
                     ),
