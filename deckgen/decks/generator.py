@@ -22,8 +22,8 @@ class DeckGen:
         :return: List of generated cards. Each card is a dictionary with 'front' and 'back' keys.
         """
         # Placeholder for deck generation logic
-        qa_toolkit = QAToolKit(input_text=self.input_text)
-        qa_list = qa_toolkit.generate_qa()
+        qa_toolkit = QAToolKit()
+        qa_list = qa_toolkit.generate_qa(self.input_text)
         deck = Deck(
             name="Generated Deck", description="Deck generated from input text."
         )
