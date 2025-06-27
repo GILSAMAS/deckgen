@@ -56,5 +56,14 @@ class QAParser:
         ]
         # Ensure that the list is not empty
         if not qa_list:
-            raise ValueError("No valid question-answer pairs found in the text.")
+            print("No valid question-answer pairs found in the text.")
+            print("Text provided for parsing:", self.text)
+            print(f"Parsed QA List: {qa_list}")
+            qa_list = [
+                {
+                    "question": "No valid question found",
+                    "answer": "No valid answer found",
+                }
+            ]
+            # raise ValueError("No valid question-answer pairs found in the text.")
         return qa_list
