@@ -1,8 +1,9 @@
-from typing import List 
+from typing import List
 from typing import Dict
 from typing import Optional
 import pandas as pd
-import mlflow 
+import mlflow
+
 
 class QAEvaluation:
     """
@@ -11,7 +12,9 @@ class QAEvaluation:
     It provides a structure for evaluating question-answer pairs.
     """
 
-    def __init__(self, input_text: str, qa_pairs: Optional[List[Dict[str, str]]] = None) -> None:
+    def __init__(
+        self, input_text: str, qa_pairs: Optional[List[Dict[str, str]]] = None
+    ) -> None:
         """
         Initializes the QAEvaluation with the provided input text.
 
@@ -56,10 +59,10 @@ class QAEvaluation:
         :return: A list of dictionaries containing the question and its corresponding answer.
 
         """
-        static_dataset = pd.DataFrame({
-            "inputs": [qa.get("question", "") for qa in self.qa_pairs],
-            "ground_truth": [qa.get("answer", "") for qa in self.qa_pairs],
-            
-
-        })
+        static_dataset = pd.DataFrame(
+            {
+                "inputs": [qa.get("question", "") for qa in self.qa_pairs],
+                "ground_truth": [qa.get("answer", "") for qa in self.qa_pairs],
+            }
+        )
         return self.qa_pairs if self.qa_pairs else [{"question": "", "answer": ""}]
