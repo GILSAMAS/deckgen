@@ -19,6 +19,7 @@ genanki = "^0.13.1"
 optional=true
 
 [tool.poetry.scripts]
+deckgen = "deckgen.cli:main"
 test = "deckgen.entry:main"
 test_anki = "deckgen.entry:test_genanki"
 
