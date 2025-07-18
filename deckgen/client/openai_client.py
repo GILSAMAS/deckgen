@@ -60,11 +60,16 @@ class OpenAIClient:
         openai_api_organization = os.environ.get("OPENAI_API_ORGANIZATION", None)
         openai_api_project = os.environ.get("OPENAI_API_PROJECT", None)
 
+        if openai_api_organization and openai_api_project:
+            return {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json",
+                "OpenAI-Organization": openai_api_organization,
+                "OpenAI-Project": openai_api_project,
+            }
         return {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
-            "OpenAI-Organization": openai_api_organization,
-            "OpenAI-Project": openai_api_project,
         }
 
     def request(
