@@ -2,7 +2,6 @@ import argparse
 from deckgen.decks.generator import DeckGen
 from deckgen.text_processor.reader import Reader
 from typing import Optional
-from dotenv import load_dotenv
 import os
 
 from deckgen.utils.cli import define_generate_parser
@@ -10,7 +9,6 @@ from deckgen.utils.cli import define_env_parser
 
 
 def main():
-    load_dotenv()
     parser = argparse.ArgumentParser(
         prog="deckgen", description="Generate decks from text files."
     )
@@ -19,51 +17,6 @@ def main():
 
     generate_command = define_generate_parser(subparsers)
     env_command = define_env_parser(subparsers)
-
-    # # Subcommand: generate
-    # generate_parser = subparsers.add_parser(
-    #     "generate", help="Generate a deck from an input file."
-    # )
-    # generate_parser.add_argument(
-    #     "--input-file",
-    #     "-i",
-    #     required=True,
-    #     help="Path to the input file (e.g., .txt, .md). Defaults to input.txt",
-    # )
-    # generate_parser.add_argument(
-    #     "--output",
-    #     "-o",
-    #     required=False,
-    #     default="output.apkg",
-    #     help='Directory to save the generated deck, by default "output.apkg"',
-    # )
-    # generate_parser.add_argument("--name", "-n", required=True, help="Name of the deck")
-
-    # # subcommand set-env: used to set OpenAI API key
-    # env_parser = subparsers.add_parser(
-    #     "env",
-    #     help="Set OpenAI API, organization, and project ID environment variables.",
-    # )
-
-    # env_parser.add_argument(
-    #     "--api-key",
-    #     "-k",
-    #     required=True,
-    #     help="OpenAI API key to use for requests.",
-    # )
-
-    # env_parser.add_argument(
-    #     "--organization-id",
-    #     "-o",
-    #     required=False,
-    #     help="OpenAI organization ID to use for requests.",
-    # )
-    # env_parser.add_argument(
-    #     "--project-id",
-    #     "-p",
-    #     required=False,
-    #     help="OpenAI project ID to use for requests.",
-    # )
 
     # Parse the arguments
     args = parser.parse_args()
