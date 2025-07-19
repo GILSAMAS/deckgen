@@ -1,11 +1,10 @@
 [tool.poetry]
 name = "deckgen"
-version = "0.8.0"
+version = "0.8.1"
 description = "Tool to create anki decks using generative AI"
 authors = ["Manuel Gil <manuelgilsitio@gmail.com>"]
 readme = "README.md"
 packages = [
-    { include = "prompteng"},
     { include = "deckgen"}
 ]
 
