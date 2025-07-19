@@ -1,8 +1,6 @@
 import argparse
 from deckgen.decks.generator import DeckGen
-from deckgen.pipelines.qa_pipeline import QAToolKit
 from deckgen.text_processor.reader import Reader
-from prompteng.prompts.parser import QAParser
 from typing import Optional
 from dotenv import load_dotenv
 import os
