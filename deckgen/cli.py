@@ -7,6 +7,7 @@ from typing import Optional
 from dotenv import load_dotenv
 import os
 
+
 def main():
     load_dotenv()
     parser = argparse.ArgumentParser(
@@ -36,7 +37,8 @@ def main():
 
     # subcommand set-env: used to set OpenAI API key
     env_parser = subparsers.add_parser(
-        "env", help="Set OpenAI API, organization, and project ID environment variables."
+        "env",
+        help="Set OpenAI API, organization, and project ID environment variables.",
     )
 
     env_parser.add_argument(
@@ -59,10 +61,10 @@ def main():
         help="OpenAI project ID to use for requests.",
     )
 
-    # Parse the arguments    
+    # Parse the arguments
     args = parser.parse_args()
 
-    if args.command == 'generate':
+    if args.command == "generate":
         print(f"Generating deck from {args.input_file} with name {args.name}")
         generate_deck_from_file(
             input_file=args.input_file,
@@ -71,20 +73,21 @@ def main():
             deck_description=None,  # Optional description can be added later
         )
 
-    elif args.command == 'env':
+    elif args.command == "env":
         if not args.api_key:
             raise ValueError("API key is required for authentication.")
-        
+
         if args.organization_id:
             print(f"Setting OpenAI organization ID to {args.organization_id}")
             os.environ["OPENAI_API_ORGANIZATION"] = args.organization_id
-        
+
         if args.project_id:
             print(f"Setting OpenAI project ID to {args.project_id}")
             os.environ["OPENAI_API_PROJECT"] = args.project_id
 
         print(f"Setting OpenAI API key.")
         os.environ["OPENAI_API_KEY"] = args.api_key
+
 
 def generate_deck_from_file(
     input_file: str,
@@ -97,7 +100,7 @@ def generate_deck_from_file(
 
     :param input_file: Path to the input file.
     :param deck_name: Name of the deck to be generated.
-    :param dst: Optional destination directory for the generated deck file. 
+    :param dst: Optional destination directory for the generated deck file.
         If not provided, the deck will be saved in the current directory.
     :param deck_description: Optional description for the deck.
     """
@@ -115,4 +118,3 @@ def generate_deck_from_file(
     if not dst:
         dst = "output.apkg"
     deck.generate_anki_deck(dst)
-
