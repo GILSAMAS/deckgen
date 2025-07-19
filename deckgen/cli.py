@@ -5,7 +5,7 @@ from deckgen.text_processor.reader import Reader
 from prompteng.prompts.parser import QAParser
 from typing import Optional
 from dotenv import load_dotenv
-
+import os
 
 def main():
     load_dotenv()
@@ -34,7 +34,32 @@ def main():
     )
     generate_parser.add_argument("--name", "-n", required=True, help="Name of the deck")
 
-    
+    # subcommand set-env: used to set OpenAI API key
+    env_parser = subparsers.add_parser(
+        "env", help="Set OpenAI API, organization, and project ID environment variables."
+    )
+
+    env_parser.add_argument(
+        "--api-key",
+        "-k",
+        required=True,
+        help="OpenAI API key to use for requests.",
+    )
+
+    env_parser.add_argument(
+        "--organization-id",
+        "-o",
+        required=False,
+        help="OpenAI organization ID to use for requests.",
+    )
+    env_parser.add_argument(
+        "--project-id",
+        "-p",
+        required=False,
+        help="OpenAI project ID to use for requests.",
+    )
+
+    # Parse the arguments    
     args = parser.parse_args()
 
     if args.command == 'generate':
@@ -46,8 +71,20 @@ def main():
             deck_description=None,  # Optional description can be added later
         )
 
+    elif args.command == 'env':
+        if not args.api_key:
+            raise ValueError("API key is required for authentication.")
+        
+        if args.organization_id:
+            print(f"Setting OpenAI organization ID to {args.organization_id}")
+            os.environ["OPENAI_API_ORGANIZATION"] = args.organization_id
+        
+        if args.project_id:
+            print(f"Setting OpenAI project ID to {args.project_id}")
+            os.environ["OPENAI_API_PROJECT"] = args.project_id
 
-
+        print(f"Setting OpenAI API key.")
+        os.environ["OPENAI_API_KEY"] = args.api_key
 
 def generate_deck_from_file(
     input_file: str,
