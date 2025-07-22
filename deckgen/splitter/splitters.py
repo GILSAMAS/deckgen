@@ -1,6 +1,7 @@
 from typing import List
 from typing import Optional
 from langchain_text_splitters import CharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 
 class SimpleSplitter:
@@ -69,6 +70,27 @@ class SimpleSplitter:
         else:
             return []
 
+    def split_by_text_structure(
+        self,
+        text: str,
+        chunk_size: Optional[int] = 1000,
+        chunk_overlap: Optional[int] = 500,
+    ) -> List[str]:
+        """
+        Splits the input text into chunks based on the structure of the text.
+
+        :param text: The text to be split.
+        :param chunk_size: The maximum length of each chunk. Default is 1000 characters.
+        :param chunk_overlap: The number of characters to overlap between chunks. Default is 500 characters.
+        :return: A list of text chunks.
+        """
+        text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=chunk_size,
+            chunk_overlap=chunk_overlap,
+        )
+        texts = text_splitter.split_text(text)
+        return texts
+
     def get_chunks(self, text: str, method: str = "length", **kwargs) -> List[str]:
         """
         Splits the text based on the specified method.
@@ -93,6 +115,12 @@ class SimpleSplitter:
                 text,
                 chunk_size=kwargs.get("chunk_size", 1000),
                 chunk_overlap=kwargs.get("chunk_overlap", 200),
+            )
+        elif method == "text_structure":
+            return self.split_by_text_structure(
+                text,
+                chunk_size=kwargs.get("chunk_size", 1000),
+                chunk_overlap=kwargs.get("chunk_overlap", 500),
             )
         else:
             raise ValueError(f"Unsupported splitting method: {method}")

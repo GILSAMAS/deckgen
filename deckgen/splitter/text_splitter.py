@@ -66,7 +66,12 @@ class TextSplitterFactory:
         :param method: The method to be used for splitting.
         :return: An instance of TextSplitter or None if the method is not supported.
         """
-        if method == "length" or method == "delimiter" or method == "token":
+        if (
+            method == "length"
+            or method == "delimiter"
+            or method == "token"
+            or method == "text_structure"
+        ):
             return SimpleSplitter()
         # Add more methods as needed
         return None
