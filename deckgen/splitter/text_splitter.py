@@ -1,12 +1,10 @@
 from typing import List
 from typing import Optional
-
-from deckgen.splitter.base import BaseSplitter
 from deckgen.splitter.document import Document
 from deckgen.splitter.splitters import SimpleSplitter
 
 
-class TextSplitter(BaseSplitter):
+class TextSplitter:
     """
     A splitter that splits text documents into smaller parts.
     This class extends the BaseSplitter and implements the split method.
@@ -25,7 +23,8 @@ class TextSplitter(BaseSplitter):
         self,
         method: Optional[str] = "length",
         chunk_size: Optional[int] = 100,
-        delimiter: Optional[str] = "\n",
+        chunk_overlap: Optional[int] = 0,
+        delimiter: Optional[str] = "\n\n",
     ) -> List[Document]:
         """
         Splits the document into smaller parts based on a specified logic.
@@ -41,10 +40,11 @@ class TextSplitter(BaseSplitter):
             raise ValueError(f"Splitter method '{method}' is not supported.")
 
         # get a list of strings based on the method
-        documents = splitter.get_documents(
+        documents = splitter.get_chunks(
             text=self.document,
             method=method,
             chunk_size=chunk_size,
+            chunk_overlap=chunk_overlap,
             delimiter=delimiter,
         )
 
@@ -66,7 +66,7 @@ class TextSplitterFactory:
         :param method: The method to be used for splitting.
         :return: An instance of TextSplitter or None if the method is not supported.
         """
-        if method == "length" or method == "delimiter":
+        if method == "length" or method == "delimiter" or method == "token":
             return SimpleSplitter()
         # Add more methods as needed
         return None
