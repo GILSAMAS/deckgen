@@ -4,9 +4,6 @@ from typing import Dict
 
 from deckgen.decks.base import Deck
 from deckgen.decks.base import Card
-from deckgen.pipelines.qa_pipeline import QAToolKit
-from deckgen.decks.anki_utils import generate_note
-from deckgen.decks.anki_utils import get_anki_qa_model
 
 
 class DeckGen:
