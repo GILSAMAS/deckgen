@@ -1,6 +1,8 @@
 import argparse
 from deckgen.decks.generator import DeckGen
 from deckgen.reader.file_reader import FileReader
+from deckgen.splitter.text_splitter import TextSplitter
+from deckgen.pipelines.qa_pipeline import QAToolKit
 from typing import Optional
 import os
 
@@ -64,10 +66,22 @@ def generate_deck_from_file(
     reader = FileReader(input_file)
     content = reader.get_content()
     print("Content read from file:", content)
+    text_splitter = TextSplitter(document=content)
+    chunks = text_splitter.split_text(
+        method="length", chunk_overlap=100, chunk_size=500
+    )
+
+    print("Content after splitting:", chunks)
+
+    qa_list = []
+    for chunk in chunks:
+        print("Processing chunk:", chunk.get_content())
+        qa_toolkit = QAToolKit(input_text=chunk.get_content())
+        qa_list.extend(qa_toolkit.generate_qa())
 
     deck_gen = DeckGen(input_text=content)
     deck = deck_gen.generate_deck(
-        deck_name=deck_name, deck_description=deck_description
+        qa_list=qa_list, deck_name=deck_name, deck_description=deck_description
     )
 
     print("Generated Deck:", deck.name)
