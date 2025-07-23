@@ -1,4 +1,4 @@
-from deckgen.client.openai_client import OpenAIClient
+from deckgen.generation.openai_client import OpenAIClient
 from deckgen.templates import TOPIC_FINDER
 from deckgen.templates import QUESTION_ASKING
 from typing import Optional
