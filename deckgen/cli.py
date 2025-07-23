@@ -1,6 +1,6 @@
 import argparse
 from deckgen.decks.generator import DeckGen
-from deckgen.text_processor.reader import Reader
+from deckgen.reader.file_reader import FileReader
 from typing import Optional
 import os
 
@@ -61,9 +61,8 @@ def generate_deck_from_file(
         If not provided, the deck will be saved in the current directory.
     :param deck_description: Optional description for the deck.
     """
-
-    reader = Reader(input_file)
-    content = reader.read()
+    reader = FileReader(input_file)
+    content = reader.get_content()
     print("Content read from file:", content)
 
     deck_gen = DeckGen(input_text=content)
