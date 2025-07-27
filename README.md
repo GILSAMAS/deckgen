@@ -17,7 +17,7 @@ pip install deckgen
 ## Command Line Interface
 
 ```bash
->> deckgen env --api-key <MY OPENAI API KEY>
+>> deckgen env --openai-api-key <MY OPENAI API KEY>
 >> deckgen generate --input-file path/to/notes.txt --output mydeck.apkg --name <deck name>
 ```
 
