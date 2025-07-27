@@ -5,6 +5,7 @@ from deckgen.splitter.text_splitter import TextSplitter
 from deckgen.pipelines.qa_pipeline import QAToolKit
 from deckgen.pipelines.qa_pipeline import QAParser
 from deckgen.pipelines.validate_qa import score_qa_list
+from tqdm import tqdm
 from typing import Optional
 import os
 
@@ -69,29 +70,23 @@ def generate_deck_from_file(
     """
     reader = FileReader(input_file)
     content = reader.get_content()
-    print("Content read from file:", content)
     text_splitter = TextSplitter(document=content)
     chunks = text_splitter.split_text(
         method="length", chunk_overlap=100, chunk_size=500
     )
 
-    print("Content after splitting:", chunks)
-
     qa_list = []
     qa_toolkit = QAToolKit()
     parser = QAParser()
-    for chunk in chunks:
+    for chunk in tqdm(chunks, desc="Processing chunks"):
         content = chunk.get_content()
-        print("Processing chunk:", content)
         topics = qa_toolkit.get_topics(content)
-        print("Extracted topics:", topics)
         qa_string = qa_toolkit.generate_qa_string(topics=topics, text=content)
-        print("Generated QA string:", qa_string)
         qa_list_ = parser.parse(qa_string)
-        for qa in qa_list_:
+        for qa in tqdm(qa_list_, desc="Processing QAs"):
             qa["chunk"] = content
+
         qa_list.extend(qa_list_)
-    print("Generated QA list:", qa_list)
     scored_list = score_qa_list(qa_list, client=qa_toolkit.openai_client)
     filtered_qa_list = [qa for qa in scored_list if qa["rating"] >= RATING_THRESHOLD]
     deck_gen = DeckGen()
