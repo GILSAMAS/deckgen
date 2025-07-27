@@ -2,7 +2,7 @@ import httpx
 import os
 from typing import Optional
 from typing import Dict
-
+import json
 
 class OpenAIClient:
 
@@ -88,3 +88,20 @@ class OpenAIClient:
             method, url, headers=self.headers, data=data, timeout=30
         )
         return response
+    
+    def call_llm(self, model_name: str, prompt:str) -> Dict:
+        """
+        Calls the OpenAI LLM with the specified model and prompt.
+
+        :param model_name: The name of the model to use (e.g., 'gpt-3.5-turbo').
+        :param prompt: The prompt to send to the model.
+        :return: The response from the LLM as a dictionary.
+        """
+        data = {
+            "model": model_name,
+            "input": prompt,
+        }
+        response = self.request("POST", "responses", data=json.dumps(data))
+        if response.status_code != 200:
+            raise ValueError(f"OpenAI API request failed: {response.text}")
+        return response.json()
