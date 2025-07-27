@@ -2,6 +2,7 @@ from typing import List
 from typing import Dict
 import re
 from deckgen.templates import QUESTION_GROUNDEDNESS_CRITIQUE_PROMPT
+from tqdm import tqdm
 
 
 def extract_rating(text: str) -> dict:
@@ -32,13 +33,12 @@ def score_qa_list(qa_list: List[Dict[str, str]], client) -> List[Dict[str, str]]
     qa_list = (
         qa_list.copy()
     )  # Create a copy of the list to avoid modifying the original
-    for qa in qa_list:
+    for qa in tqdm(qa_list, desc="Processing QAs"):
         # Assuming each qa has 'question', 'answer', and 'chunk' keys
         if not all(key in qa for key in ["question", "answer", "chunk"]):
             raise ValueError(
                 "Each QA entry must contain 'question', 'answer', and 'chunk' keys."
             )
-        print(f"Evaluating QA: {qa['question']} - {qa['answer']}")
         # Call the OpenAI client to evaluate the groundedness of the question-answer pair
         response = client.call_llm(
             model_name="gpt-4o-mini",
