@@ -43,20 +43,20 @@ def define_env_parser(subparsers) -> str:
     )
 
     env_parser.add_argument(
-        "--api-key",
+        "--openai-api-key",
         "-k",
         required=True,
         help="OpenAI API key to use for requests.",
     )
 
     env_parser.add_argument(
-        "--organization-id",
+        "--openai-organization-id",
         "-o",
         required=False,
         help="OpenAI organization ID to use for requests.",
     )
     env_parser.add_argument(
-        "--project-id",
+        "--openai-project-id",
         "-p",
         required=False,
         help="OpenAI project ID to use for requests.",
