@@ -38,19 +38,19 @@ def main():
         )
 
     elif args.command == env_command:
-        if not args.api_key:
+        if not args.openai_api_key:
             raise ValueError("API key is required for authentication.")
 
-        if args.organization_id:
-            print(f"Setting OpenAI organization ID to {args.organization_id}")
-            os.environ["OPENAI_API_ORGANIZATION"] = args.organization_id
+        if args.openai_organization_id:
+            print(f"Setting OpenAI organization ID to {args.openai_organization_id}")
+            os.environ["OPENAI_API_ORGANIZATION"] = args.openai_organization_id
 
-        if args.project_id:
-            print(f"Setting OpenAI project ID to {args.project_id}")
-            os.environ["OPENAI_API_PROJECT"] = args.project_id
+        if args.openai_project_id:
+            print(f"Setting OpenAI project ID to {args.openai_project_id}")
+            os.environ["OPENAI_API_PROJECT"] = args.openai_project_id
 
         print(f"Setting OpenAI API key.")
-        os.environ["OPENAI_API_KEY"] = args.api_key
+        os.environ["OPENAI_API_KEY"] = args.openai_api_key
 
 
 def generate_deck_from_file(
