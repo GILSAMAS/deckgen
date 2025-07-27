@@ -37,3 +37,21 @@ Here is an example of the output format you should use:
    <answer 2>
 
 """
+QUESTION_GROUNDEDNESS_CRITIQUE_PROMPT = """
+You will be given a context and a question.
+Your task is to provide a 'total rating' scoring how well one can answer the given question unambiguously with the given context.
+Give your answer on a scale of 1 to 5, where 1 means that the question is not answerable at all given the context, and 5 means that the question is clearly and unambiguously answerable with the context.
+
+Provide your answer as follows:
+
+Answer:::
+Evaluation: (your rationale for the rating, as a text)
+Total rating: (your rating, as a number between 1 and 5)
+
+You MUST provide values for 'Evaluation:' and 'Total rating:' in your answer.
+
+Now here are the question and context.
+
+Question: {question}\n
+Context: {context}\n
+Answer:::"""

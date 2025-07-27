@@ -7,13 +7,11 @@ from deckgen.decks.base import Card
 
 
 class DeckGen:
-    def __init__(self, input_text: Optional[str] = None):
+    def __init__(self):
         """
-        Initializes the DeckGen class with the input text.
-
-        :param input_text: The text input to generate a deck from.
+        Initializes the DeckGen class.
         """
-        self.input_text = input_text
+        pass
 
     def generate_deck(
         self,
