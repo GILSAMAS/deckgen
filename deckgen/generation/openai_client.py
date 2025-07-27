@@ -4,6 +4,7 @@ from typing import Optional
 from typing import Dict
 import json
 
+
 class OpenAIClient:
 
     api_version = "v1"
@@ -88,8 +89,8 @@ class OpenAIClient:
             method, url, headers=self.headers, data=data, timeout=30
         )
         return response
-    
-    def call_llm(self, model_name: str, prompt:str) -> Dict:
+
+    def call_llm(self, model_name: str, prompt: str) -> Dict:
         """
         Calls the OpenAI LLM with the specified model and prompt.
 
