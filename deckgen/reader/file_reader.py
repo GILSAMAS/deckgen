@@ -1,6 +1,11 @@
 from deckgen.reader.base import BaseReader
 from deckgen.reader.validations import validate_txt_file
 from pathlib import Path
+from typing import List
+from typing import Optional
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import TextLoader
+from langchain_core.documents.base import Document
 
 
 class FileReader(BaseReader):
@@ -19,27 +24,57 @@ class FileReader(BaseReader):
         """
         self.file_path = file_path if isinstance(file_path, Path) else Path(file_path)
         self.file_extension = self.file_path.suffix
+        if self.file_extension not in [".txt", ".pdf"]:
+            raise ValueError(
+                f"Unsupported file type: {self.file_extension}. Only .txt and .pdf files are supported."
+            )
         self.content = None
 
-    def read(self):
-        """
-        Reads content from the specified file.
-
-        :return: The content read from the file.
-        :raises ValueError: If the file extension is not .txt.
-        :raises FileNotFoundError: If the file does not exist.
-        """
-        validate_txt_file(self.file_path)
-        with open(self.file_path, "r", encoding="utf-8") as file:
-            self.content = file.read()
-        return self.content
-
-    def get_content(self):
+    def get_content(self, n_documents: Optional[int] = -1) -> str:
         """
         Returns the content read from the file.
 
+        :param n_documents: The number of documents to read. Default is -1 (all documents).
+        :raises ValueError: If the file is not a valid text file.
         :return: The content read from the file.
         """
-        if self.content is None:
-            self.read()
+        documents = self.get_documents()
+        if not documents:
+            raise ValueError("No documents found in the file.")
+        if n_documents == -1 or n_documents > len(documents):
+            n_documents = len(documents)
+        self.content = self._join_documents(documents[:n_documents])
         return self.content
+
+    def get_documents(self) -> List[Document]:
+        """
+        Returns the documents read from the file.
+
+        :return: A list of documents read from the file.
+        """
+        loader = self.__get_loader()
+        documents = []
+        for page in loader.load():
+            documents.append(page)
+
+        return documents
+
+    def __get_loader(self):
+        """
+        Returns the appropriate loader based on the file type.
+
+        :return: A loader instance for the file type.
+        """
+        if self.file_extension == ".pdf":
+            return PyPDFLoader(self.file_path)
+        elif self.file_extension == ".txt":
+            return TextLoader(self.file_path)
+
+    def _join_documents(self, documents: List[Document]) -> str:
+        """
+        Joins the content of the documents into a single string.
+
+        :param documents: A list of Document objects.
+        :return: A string containing the joined content of the documents.
+        """
+        return "\n".join([doc.page_content for doc in documents]) if documents else ""

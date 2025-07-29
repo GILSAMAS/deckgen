@@ -8,15 +8,6 @@ class BaseReader(ABC):
     """
 
     @abstractmethod
-    def read(self):
-        """
-        Reads content from the source.
-        This method should be implemented by subclasses to provide specific reading logic.
-        :return: The content read from the source.
-        """
-        pass
-
-    @abstractmethod
     def get_content(self):
         """
         Returns the content read from the source.

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "deckgen"
-version = "0.9.4"
+version = "0.10.0"
 description = "Tool to create anki decks using generative AI"
 authors = ["Manuel Gil <manuelgilsitio@gmail.com>"]
 readme = "README.md"
@@ -16,6 +16,7 @@ genanki = "^0.13.1"
 langchain-experimental = "^0.3.4"
 langchain = "^0.3.26"
 tqdm = "^4.67.1"
+pypdf = "^5.9.0"
 
 [tool.poetry.group.test]
 optional=true
