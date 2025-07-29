@@ -47,6 +47,8 @@ Provide your answer as follows:
 Answer:::
 Evaluation: (your rationale for the rating, as a text)
 Total rating: (your rating, as a number between 1 and 5)
+You MUST follow the output format for the total rating exactly as shown.
+Total rating must be a number between 1 and 5. DO NOT use any other format or additional text.
 
 You MUST provide values for 'Evaluation:' and 'Total rating:' in your answer.
 

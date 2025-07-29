@@ -13,6 +13,8 @@ def extract_rating(text: str) -> dict:
     :return: A dictionary with the rating value as an integer.
     :raises ValueError: If the rating value is not found or is invalid.
     """
+    print("Extracting rating from text...")
+    print(text)
     match = re.search(r"Total rating:\s*(\d+)", text)
     if match:
         rating = int(match.group(1))

@@ -16,6 +16,7 @@ genanki = "^0.13.1"
 langchain-experimental = "^0.3.4"
 langchain = "^0.3.26"
 tqdm = "^4.67.1"
+pypdf = "^5.9.0"
 
 [tool.poetry.group.test]
 optional=true
