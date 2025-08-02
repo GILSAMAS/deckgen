@@ -2,7 +2,7 @@ import genanki
 from typing import List
 from deckgen.utils.files import read_yaml
 from deckgen.utils.files import get_root_directory
-
+import random 
 def get_anki_model(model_name: str) -> genanki.Model:
     """
     Gets a genanki Model for question-answer pairs.
@@ -44,16 +44,16 @@ def generate_note(question: str, answer: str, model: genanki.Model) -> genanki.N
 
 
 def generate_deck(
-    notes: List[genanki.Note], deck_name: str, deck_id: int
+    notes: List[genanki.Note], deck_name: str
 ) -> genanki.Deck:
     """
     Generates a genanki Deck from a list of notes.
 
     :param notes: A list of genanki.Note objects.
     :param deck_name: The name of the deck.
-    :param deck_id: The unique identifier for the deck.
     :return: A genanki.Deck object containing the notes.
     """
+    deck_id = random.randint(1 << 30, 1 << 31)
     deck = genanki.Deck(deck_id, deck_name)
     for note in notes:
         deck.add_note(note)
