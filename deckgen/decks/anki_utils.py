@@ -3,7 +3,6 @@ from typing import List
 from deckgen.utils.files import read_yaml
 from deckgen.utils.files import get_root_directory
 
-
 def get_anki_model(model_name: str) -> genanki.Model:
     """
     Gets a genanki Model for question-answer pairs.
@@ -27,11 +26,10 @@ def get_anki_model(model_name: str) -> genanki.Model:
         model_id,
         models[model_name]["name"],
         fields=models[model_name]["fields"],
-        templates=models[model_name]["templates"],
+        templates=models[model_name]["templates"]
     )
 
     return model
-
 
 def generate_note(question: str, answer: str, model: genanki.Model) -> genanki.Note:
     """
@@ -43,18 +41,6 @@ def generate_note(question: str, answer: str, model: genanki.Model) -> genanki.N
     :return: A genanki.Note object.
     """
     return genanki.Note(model=model, fields=[question, answer])
-
-
-def get_anki_qa_model() -> genanki.Model:
-    """
-    Gets a genanki Model for question-answer pairs.
-    This model can be used to create Anki notes with questions and answers.
-    """
-    model = get_anki_model("simple_qa")
-    if not model:
-        raise ValueError("Model 'simple_qa' not found in the configuration.")
-
-    return model
 
 
 def generate_deck(
