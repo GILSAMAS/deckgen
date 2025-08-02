@@ -11,7 +11,7 @@ def test_read_template():
     """
     template_names = [
         "question_asking",
-        "question_groundeness_critique_prompt",
+        "question_groundedness_critique_prompt",
         "topic_finder"
     ]
     template_contents = {}
