@@ -1,8 +1,9 @@
 from typing import List
 from typing import Dict
 import re
-from deckgen.templates import QUESTION_GROUNDEDNESS_CRITIQUE_PROMPT
 from tqdm import tqdm
+
+from deckgen.utils.files import read_template
 
 
 def extract_rating(text: str) -> dict:
@@ -35,6 +36,9 @@ def score_qa_list(qa_list: List[Dict[str, str]], client) -> List[Dict[str, str]]
     qa_list = (
         qa_list.copy()
     )  # Create a copy of the list to avoid modifying the original
+    QUESTION_GROUNDEDNESS_CRITIQUE_PROMPT = read_template(
+        "question_groundedness_critique_prompt"
+    )  # Load the template for the critique prompt
     for qa in tqdm(qa_list, desc="Processing QAs"):
         # Assuming each qa has 'question', 'answer', and 'chunk' keys
         if not all(key in qa for key in ["question", "answer", "chunk"]):

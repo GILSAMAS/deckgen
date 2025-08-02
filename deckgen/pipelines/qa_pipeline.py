@@ -1,7 +1,4 @@
-from deckgen.generation.openai_client import OpenAIClient
-from deckgen.templates import TOPIC_FINDER
-from deckgen.templates import QUESTION_ASKING
-from typing import Optional
+from deckgen.utils.files import read_template
 from typing import List
 from typing import Dict
 import json
@@ -69,7 +66,8 @@ class QAToolKit:
         """
         if not text:
             raise ValueError("No text provided for topic extraction.")
-
+        
+        TOPIC_FINDER = read_template("topic_finder")
         topic_response = self.openai_client.request(
             method="POST",
             endpoint="responses",
@@ -92,7 +90,7 @@ class QAToolKit:
     def generate_qa_string(self, topics: str, text: str) -> str:
         """
         Generates a question-answer string based on the input text and identified topics.
-        :param topics: A string containing the identified topics.
+        :param topics: A string containing athe identified topics.
         :param text: The input text to generate questions and answers from.
         :return: A string containing the generated questions and answers.
         :raises ValueError: If no input text is provided for question generation.
@@ -101,6 +99,8 @@ class QAToolKit:
             raise ValueError("No input text provided for question generation.")
         if not topics:
             raise ValueError("No topics provided for question generation.")
+        
+        QUESTION_ASKING = read_template("question_asking")
         qa_response = self.openai_client.request(
             method="POST",
             endpoint="responses",
