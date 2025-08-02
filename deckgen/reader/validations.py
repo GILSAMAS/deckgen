@@ -1,31 +1,37 @@
 from typing import List
 from pathlib import Path
+from typing import Optional
+from typing import Union
+
+ALLOWED_EXTENSIONS = [".txt", ".pdf"]
 
 
-def validate_file_extension(file_path: str, allowed_extensions: List[str]):
+def validate_file_extension(filepath: Union[str, Path], allowed_extensions: List[str]):
     """
     Validates the file extension against a list of allowed extensions.
 
-    :param file_path: The path to the file to be validated.
+    :param filepath: The path to the file to be validated.
     :param allowed_extensions: A list of allowed file extensions.
     :raises ValueError: If the file extension is not in the allowed list.
     """
-    if not any(file_path.suffix == ext for ext in allowed_extensions):
+    filepath = Path(filepath) if isinstance(filepath, str) else filepath
+    if not filepath.suffix:
+        raise ValueError("File has no extension.")
+
+    if not any(filepath.suffix == ext for ext in allowed_extensions):
         raise ValueError(
             f"Invalid file type. Allowed types are: {', '.join(allowed_extensions)}"
         )
 
 
-def validate_txt_file(file_path: str):
+def validate_filepath(filepath: Union[str, Path]):
     """
-    Validates the file extension to ensure it is a .txt file.
+    Validates the file path to ensure it exists.
 
-    :param file_path: The path to the file to be validated.
-    :raises ValueError: If the file extension is not .txt.
+    :param filepath: The path to the file to be validated.
     :raises FileNotFoundError: If the file does not exist.
     """
-
-    validate_file_extension(file_path, [".txt"])
-    # validate that the file exists
-    if not Path(file_path).exists():
-        raise FileNotFoundError(f"The file {file_path} does not exist.")
+    filepath = Path(filepath) if isinstance(filepath, str) else filepath
+    validate_file_extension(filepath, ALLOWED_EXTENSIONS)
+    if not filepath.exists():
+        raise FileNotFoundError(f"The file {filepath} does not exist.")

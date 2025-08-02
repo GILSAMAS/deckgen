@@ -1,5 +1,5 @@
 from deckgen.reader.base import BaseReader
-from deckgen.reader.validations import validate_txt_file
+from deckgen.reader.validations import validate_filepath
 from pathlib import Path
 from typing import List
 from typing import Optional
@@ -23,11 +23,8 @@ class FileReader(BaseReader):
         :param file_path: The path to the file to be read.
         """
         self.file_path = file_path if isinstance(file_path, Path) else Path(file_path)
+        validate_filepath(self.file_path)
         self.file_extension = self.file_path.suffix
-        if self.file_extension not in [".txt", ".pdf"]:
-            raise ValueError(
-                f"Unsupported file type: {self.file_extension}. Only .txt and .pdf files are supported."
-            )
         self.content = None
 
     def get_content(self, n_documents: Optional[int] = -1) -> str:
