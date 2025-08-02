@@ -36,7 +36,7 @@ def define_env_parser(subparsers) -> str:
     :param subparsers: The subparsers object to add the 'env' command parser to.
     :return: The name of the subcommand.
     """
-    # subcommand set-env: used to set OpenAI API key
+    # subcommand env: used to set OpenAI API key
     env_parser = subparsers.add_parser(
         "env",
         help="Set OpenAI API, organization, and project ID environment variables.",

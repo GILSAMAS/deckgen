@@ -1,7 +1,6 @@
 from deckgen.utils.files import read_template
 
 
-
 def test_read_template():
     """
     Test reading template files.
@@ -12,7 +11,7 @@ def test_read_template():
     template_names = [
         "question_asking",
         "question_groundedness_critique_prompt",
-        "topic_finder"
+        "topic_finder",
     ]
     template_contents = {}
     for template_name in template_names:
