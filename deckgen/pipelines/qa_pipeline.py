@@ -66,7 +66,7 @@ class QAToolKit:
         """
         if not text:
             raise ValueError("No text provided for topic extraction.")
-        
+
         TOPIC_FINDER = read_template("topic_finder")
         topic_response = self.openai_client.request(
             method="POST",
@@ -99,7 +99,7 @@ class QAToolKit:
             raise ValueError("No input text provided for question generation.")
         if not topics:
             raise ValueError("No topics provided for question generation.")
-        
+
         QUESTION_ASKING = read_template("question_asking")
         qa_response = self.openai_client.request(
             method="POST",

@@ -4,7 +4,7 @@ from typing import Optional
 from typing import List
 from pathlib import Path
 from deckgen.decks.anki_utils import generate_note
-from deckgen.decks.anki_utils import get_anki_qa_model
+from deckgen.decks.anki_utils import get_anki_model
 from deckgen.decks.anki_utils import generate_deck
 import genanki
 
@@ -48,7 +48,7 @@ class Deck:
         :param filename: The name of the output file.
         :return: None
         """
-        anki_model = get_anki_qa_model()
+        anki_model = get_anki_model("simple_qa")
         notes = []
         for card in self.list_cards():
             note = generate_note(card["front"], card["back"], anki_model)
