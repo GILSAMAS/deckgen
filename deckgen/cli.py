@@ -4,7 +4,7 @@ from deckgen.reader.file_reader import FileReader
 from deckgen.splitter.text_splitter import TextSplitter
 from deckgen.pipelines.qa_pipeline import QAToolKit
 from deckgen.pipelines.qa_pipeline import QAParser
-from deckgen.client.openai_client import OpenAIClient
+from deckgen.generation.openai_client import OpenAIClient
 from deckgen.pipelines.validate_qa import score_qa_list
 from tqdm import tqdm
 from typing import Optional
@@ -80,7 +80,7 @@ def generate_deck_from_file(
     openai_client = OpenAIClient(api_key=os.getenv("OPENAI_API_KEY"))
     qa_toolkit = QAToolKit(openai_client=openai_client)
     parser = QAParser()
-    
+
     for chunk in tqdm(chunks, desc="Processing chunks"):
         content = chunk.get_content()
         topics = qa_toolkit.get_topics(content)
