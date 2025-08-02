@@ -6,6 +6,8 @@ from deckgen.pipelines.qa_pipeline import QAToolKit
 from deckgen.pipelines.qa_pipeline import QAParser
 from deckgen.generation.openai_client import OpenAIClient
 from deckgen.pipelines.validate_qa import score_qa_list
+from deckgen.reader.validations import validate_filepath
+
 from tqdm import tqdm
 from typing import Optional
 import os
@@ -31,6 +33,7 @@ def main():
 
     if args.command == generate_command:
         print(f"Generating deck from {args.input_file} with name {args.name}")
+        validate_filepath(args.input_file)
         generate_deck_from_file(
             input_file=args.input_file,
             deck_name=args.name,
