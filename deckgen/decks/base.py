@@ -54,7 +54,7 @@ class Deck:
             note = generate_note(card["front"], card["back"], anki_model)
             notes.append(note)
 
-        deck = generate_deck(notes, self.name, 2059400111)
+        deck = generate_deck(notes, self.name)
         valid_filename = self._get_valid_filename(filename)
         genanki.Package(deck).write_to_file(valid_filename)
 
