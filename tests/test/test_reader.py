@@ -6,7 +6,7 @@ import tempfile
 def create_temp_file(content: str, suffix: str = ".txt") -> str:
     """
     Create a temporary file with the given content and suffix.
-    
+
     :param content: The content to write to the file.
     :param suffix: The file extension (default is .txt).
     :return: The path to the temporary file.
@@ -15,6 +15,7 @@ def create_temp_file(content: str, suffix: str = ".txt") -> str:
     temp_file.write(content.encode())
     temp_file.close()
     return temp_file.name
+
 
 def test_read_text():
     """
@@ -34,6 +35,7 @@ def test_read_text():
     finally:
         # Clean up the temporary file
         os.remove(temp_file_path)
+
 
 def test_file_extension_validation():
     """
@@ -55,7 +57,8 @@ def test_file_extension_validation():
         # Clean up the temporary file
         os.remove(temp_file_path_txt)
         os.remove(temp_file_path_pdf)
-        
+
+
 def test_invalid_file_extension():
     """
     Test that an error is raised when trying to read a file with an invalid extension.
@@ -73,6 +76,7 @@ def test_invalid_file_extension():
     finally:
         # Clean up the temporary file
         os.remove(temp_file_path)
+
 
 def test_file_not_found():
     """
