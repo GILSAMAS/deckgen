@@ -2,6 +2,7 @@ from typing import List
 from pathlib import Path
 from typing import Optional
 from typing import Union
+
 ALLOWED_EXTENSIONS = [".txt", ".pdf"]
 
 
@@ -16,11 +17,12 @@ def validate_file_extension(filepath: Union[str, Path], allowed_extensions: List
     filepath = Path(filepath) if isinstance(filepath, str) else filepath
     if not filepath.suffix:
         raise ValueError("File has no extension.")
-    
+
     if not any(filepath.suffix == ext for ext in allowed_extensions):
         raise ValueError(
             f"Invalid file type. Allowed types are: {', '.join(allowed_extensions)}"
         )
+
 
 def validate_filepath(filepath: Union[str, Path]):
     """
