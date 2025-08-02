@@ -59,8 +59,8 @@ class QAParser:
 
 
 class QAToolKit:
-    def __init__(self, openai_api_key: Optional[str] = None):
-        self.openai_client = OpenAIClient(api_key=openai_api_key)
+    def __init__(self, openai_client):
+        self.openai_client = openai_client
 
     def get_topics(self, text: str) -> str:
         """
