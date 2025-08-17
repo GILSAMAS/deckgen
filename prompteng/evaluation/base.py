@@ -23,6 +23,20 @@ class QAEvaluation:
         self.input_text = input_text
         self.qa_pairs = qa_pairs if qa_pairs is not None else []
 
+
+    def evaluate_generated_qa(self, qa: List[Dict[str, str]]) -> float:
+        """
+        Evaluate the quality of the generated question-answer pairs.
+        This is the main entrypoint of the class. Call this method to evaluate the QA pairs.
+
+        :param qa: A list of dictionaries containing "question", "answer", and "context".
+        :return: A score representing the quality of the generated question-answer pairs.
+        """
+        for qa in qa:
+            self.evaluate_single_qa(qa)
+        return 0.0
+
+
     def basic_evaluation(self) -> List[Dict[str, str]]:
         """
         Performs a basic evaluation of the question-answer pairs.
